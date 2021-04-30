@@ -20,21 +20,21 @@ contract TubblySale {
 	);
 
 	constructor(TubblyToken _tokenContract, uint256 _tokenPrice) {
-		admin = msg.sender;
-		tokenContract = _tokenContract;
+		  admin = msg.sender;
+		  tokenContract = _tokenContract;
     	tokenPrice = _tokenPrice;
     	saleActive = true;
   	}
 
   	function multiply(uint x, uint y) internal pure returns (uint z) {
   		require(y == 0 || (z = x * y) / y == x);
- 	}
+ 	  }
 
   	function buyTokens(uint256 _numberOfTokens) public payable {
   		require(saleActive == true);
   		require(msg.value == multiply(_numberOfTokens, tokenPrice));
-		require(tokenContract.balanceOf(address(this)) >= _numberOfTokens);
-        require(tokenContract.transfer(msg.sender, _numberOfTokens));
+		  require(tokenContract.balanceOf(address(this)) >= _numberOfTokens);
+      require(tokenContract.transfer(msg.sender, _numberOfTokens));
 
   		tokenSold += _numberOfTokens;
   		emit Sell(msg.sender, _numberOfTokens);

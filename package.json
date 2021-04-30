@@ -1,0 +1,19 @@
+{
+	"name": "tubbly-token-sale",
+	"description": "Tubbly ICO",
+	"main": "truffle-config.js",
+	"directories": {
+		"test": "test"
+	},
+	"author": "spaceh3ad",
+	"license": "ISC",
+	"scripts": {
+		"dev": "lite-server"
+	},
+	"devDependencies": {
+		"lite-server": "^2.6.1"
+	},
+	"dependencies": {
+		"@metamask/detect-provider": "^1.2.0"
+	}
+}

@@ -57,5 +57,34 @@ contract('TubblySale', function(accounts) {
 			assert(error.message.indexOf('revert') >= 0, 'cannot purchase more tokens then available');
 		});
 	});
+
+	it('ends token sale', function() {
+		return TubblyToken.deployed().then(function(instance) {
+			tokenInstance = instance;
+			return TubblySale.deployed();
+		}).then(function(instance) {
+			tokenSaleInstance = instance;
+			return tokenSaleInstance.endSale({ from: buyer });
+		}).then(assert.fail).catch(function(error) {
+			assert(error.message.indexOf('revert') >= 0, 'must be admin to end sale');
+			return tokenSaleInstance.endSale({ from: admin });
+		}).then(function(receipt) {
+			return tokenInstance.balanceOf(admin);
+		}).then(function(balance) {
+			assert.equal(balance.toNumber(), 999990, 'returns unsold tokens to admin');
+		});
+	});
+
+	it('checks if anyone can buy after ICO ended', function() {
+		return TubblyToken.deployed().then(function(instance) {
+			tokenInstance = instance;
+			return TubblySale.deployed();
+		}).then(function(instance) {
+			tokenSaleInstance = instance;
+			return tokenSaleInstance.buyTokens( { from: buyer });
+		}).then(assert.fail).catch(function(error) {
+			assert(error.message.indexOf('revert') >= 0, 'ICO ended, cannot buy tokens.')
+		});
+	});
 });
 

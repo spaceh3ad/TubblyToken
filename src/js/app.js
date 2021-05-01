@@ -39,9 +39,22 @@ App = {
 				App.contracts.TubblyToken.deployed().then(function(tubblyToken) {
 					console.log("Tubbly Token Address:", tubblyToken.address);  
 				});
+				App.listenForEvents();
 				return App.render();
 			});
 		});
+	},
+
+	listenForEvents: function() {
+		App.contracts.TubblySale.deployed().then(function(instance) {
+			instance.Sell({}, {
+				fromBlock: 0,
+				toBlock: 'latest',
+			}).watch(function(error, event) {
+				console.log("event triggered", event);
+				App.render();
+			})
+		})
 	},
 
 	render: function() {
@@ -87,6 +100,14 @@ App = {
 				return tubblyTokenInstance.balanceOf(App.account);
 		  	}).then(function(balance) {
 				$('.tblt-balance').html(balance.toNumber());
+				console.log('my balance', balance.toNumber());
+				return tubblyTokenInstance.balanceOf('0x680a9A0D159Ad1211Be2Ac4D3277d7F47aB36C09');
+		  	}).then(function(balance2) {
+				console.log('balance of tubblySale', balance2.toNumber());
+				return tubblyTokenInstance.balanceOf('0x19e5AB9097006D32A7C303fF6D580d1c02E3c61F');
+		  	}).then(function(balance3) {
+				console.log('balance of 1st address', balance3.toNumber());
+				// $('.tblt-balance').html(balance.toNumber());
 
 			})
 				App.loading = false;
@@ -99,17 +120,16 @@ App = {
 		$('#content').hide();
 		$('#loader').show();
 		var numberOfTokens = $('#numberOfTokens').val();
-		App.contracts.TubblySale.deployed(),then(function(instance) {
+		App.contracts.TubblySale.deployed().then(function(instance) {
 			return instance.buyTokens(numberOfTokens, {
 				from: App.account,
 				value: numberOfTokens * App.tokenPrice,
-				gas: 50_000
+				gas: 500_000
 			});
 		}).then(function(result) {
 			console.log("Tokens bought...")
 			$('form').trigger('reset')
-			// $('#content').show();
-			// $('#loader').hide();
+			// wait for sell event
 		});
 	}		
 }

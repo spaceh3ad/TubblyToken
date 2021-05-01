@@ -70,21 +70,29 @@ contract('TubblySale', function(accounts) {
 			return tokenSaleInstance.endSale({ from: admin });
 		}).then(function(receipt) {
 			return tokenInstance.balanceOf(admin);
-		}).then(function(balance) {
-			assert.equal(balance.toNumber(), 999990, 'returns unsold tokens to admin');
+		}).then((balance) => {
+			assert.equal(
+				balance.toNumber(),
+				999990,
+				'returns unsold tokens to admin'
+				);
+				return tokenInstance.balanceOf(tokenSaleInstance.address);
+			})
+			.then((balance) => {
+	      		assert.equal(balance.toNumber(), 0, 'contract has been reset');
 		});
 	});
 
-	it('checks if anyone can buy after ICO ended', function() {
-		return TubblyToken.deployed().then(function(instance) {
-			tokenInstance = instance;
-			return TubblySale.deployed();
-		}).then(function(instance) {
-			tokenSaleInstance = instance;
-			return tokenSaleInstance.buyTokens( { from: buyer });
-		}).then(assert.fail).catch(function(error) {
-			assert(error.message.indexOf('revert') >= 0, 'ICO ended, cannot buy tokens.')
-		});
-	});
+	// it('checks if anyone can buy after ICO ended', function() {
+	// 	return TubblyToken.deployed().then(function(instance) {
+	// 		tokenInstance = instance;
+	// 		return TubblySale.deployed();
+	// 	}).then(function(instance) {
+	// 		tokenSaleInstance = instance;
+	// 		return tokenSaleInstance.buyTokens( { from: buyer });
+	// 	}).then(assert.fail).catch(function(error) {
+	// 		assert(error.message.indexOf('revert') >= 0, 'ICO ended, cannot buy tokens.')
+	// 	});
+	// });
 });
 

@@ -9240,6 +9240,63 @@
     "version": "0.8.1+commit.df193b15.Emscripten.clang"
   },
   "networks": {
+    "5777": {
+      "events": {
+        "0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": true,
+              "internalType": "address",
+              "name": "_owner",
+              "type": "address"
+            },
+            {
+              "indexed": true,
+              "internalType": "address",
+              "name": "_spender",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "internalType": "uint256",
+              "name": "_value",
+              "type": "uint256"
+            }
+          ],
+          "name": "Approval",
+          "type": "event"
+        },
+        "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": true,
+              "internalType": "address",
+              "name": "_from",
+              "type": "address"
+            },
+            {
+              "indexed": true,
+              "internalType": "address",
+              "name": "_to",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "internalType": "uint256",
+              "name": "_value",
+              "type": "uint256"
+            }
+          ],
+          "name": "Transfer",
+          "type": "event"
+        }
+      },
+      "links": {},
+      "address": "0x2432FE8a208ff4434651B753136f1bfdDfa58a93",
+      "transactionHash": "0xf13d51d7b2ba013c16f3b325979a87408b1c5029a8865b3f972f486ca3a49d1e"
+    },
     "1619701362820": {
       "events": {},
       "links": {},
@@ -9392,7 +9449,7 @@
     }
   },
   "schemaVersion": "3.4.0",
-  "updatedAt": "2021-05-01T00:00:37.275Z",
+  "updatedAt": "2021-05-01T19:40:46.514Z",
   "networkType": "ethereum",
   "devdoc": {
     "kind": "dev",

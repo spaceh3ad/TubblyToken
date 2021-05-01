@@ -7,7 +7,8 @@ module.exports = function (deployer) {
 	return deployer.deploy(TubblySale, TubblyToken.address, tokenPrice);
 	}).then(function() {
       var tokensAvailable = 750_000;
-      var adminAddress = "0x19e5AB9097006D32A7C303fF6D580d1c02E3c61F";
+      // admin the contract launcher ( to this address some tokens will be sends)
+      var adminAddress = "0xe5E39a4f38735fd210EcD94ed9A90b9DDA16e06A";
       TubblyToken.deployed().then(function(instance) { instance.transfer(TubblySale.address, tokensAvailable, { from: adminAddress });
   	});
    });

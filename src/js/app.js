@@ -113,6 +113,10 @@ App = {
 	},
 
 	buyTokens: function() {
+		if(account === null){
+			account = "Please approve MetaMask on site."
+			return;
+		} 
 		$('#content').hide();
 		$('#loader').show();
 		var numberOfTokens = $('#numberOfTokens').val();

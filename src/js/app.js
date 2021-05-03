@@ -7,6 +7,31 @@ App = {
 	tokensSold: 0,
 	tokensAvailable: 750_000,
 
+	reload: function() {
+		// while(App.account !== null){
+		if(App.account !== null){
+
+		}
+		location.reload();
+
+		// }
+	},
+
+
+	initMetamask: async function() {
+		if(App.account !== null){
+			{ alert("MetaMask already connected!"); }
+ 			return false;
+		} 
+		const accounts = ethereum.send('eth_requestAccounts');
+		const account = accounts[0];
+		App.account = account;
+		console.log('acount', App.account);
+		// while(account !== null){
+		await App.reload(); 
+
+
+	},
 
 	init: function() {
 		console.log("App initialized...")
@@ -73,7 +98,7 @@ App = {
 			if(err === null){
 				App.account = account;
 				if(account === null){
-					account = "Please approve MetaMask on site."
+					account = "Please connect MetaMask on site."
 				}
 				$('#accountAddress').html("Your Account: " + account);
 			}
@@ -100,7 +125,7 @@ App = {
 				return tubblyTokenInstance.balanceOf(App.account);
 		  	}).then(function(balance) {
 				$('.tblt-balance').html(balance.toNumber());
-				console.log('my balance', balance.toNumber());
+				// console.log('my balance', balance.toNumber());
 				return tubblyTokenInstance.balanceOf(tubblyTokenSaleInstance.address);
 		  	}).then(function(balance2) {
 				console.log('balance of tubblySale', balance2.toNumber());
@@ -113,9 +138,9 @@ App = {
 	},
 
 	buyTokens: function() {
-		if(account === null){
-			account = "Please approve MetaMask on site."
-			return;
+		if(App.account === null){
+			{ alert("Please connect MetaMask wallet to buy tokens!"); }
+ 			return false;
 		} 
 		$('#content').hide();
 		$('#loader').show();
@@ -124,7 +149,7 @@ App = {
 			return instance.buyTokens(numberOfTokens, {
 				from: App.account,
 				value: numberOfTokens * App.tokenPrice,
-				gas: 65_000
+				gas: 100_000
 			});
 		}).then(function(result) {
 			console.log("Tokens bought...")
@@ -134,12 +159,6 @@ App = {
 	}		
 }
 
-async function enableUser() {
-	const accounts = await ethereum.enable();
-	const account = accounts[0];
-	App.account = account;
-	// refresh page to update balance and address
-}
 
 $(function() {
 	$(window).load(function() {

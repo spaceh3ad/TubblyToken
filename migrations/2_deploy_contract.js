@@ -9,11 +9,7 @@ module.exports = function (deployer) {
       var tokensAvailable = 750_000;
       // admin the contract launcher ( to this address some tokens will be sends)
 
-      //dev local
       var adminAddress = "0xe5E39a4f38735fd210EcD94ed9A90b9DDA16e06A";
-
-      // Ropsten
-      // var adminAddress = "0x767E8073F74DbFaEF0D2eeE1612deFb6a5d456Dc";
       
       TubblyToken.deployed().then(function(instance) { instance.transfer(TubblySale.address, tokensAvailable, { from: adminAddress });
   	});

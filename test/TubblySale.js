@@ -33,7 +33,7 @@ contract('TubblySale', function(accounts) {
 			tokenSaleInstance = instance;
 			return tokenInstance.transfer(tokenSaleInstance.address, tokensAvailable, { from: admin })
 		}).then(function(receipt) {
-			numberOfTokens = 10;
+			numberOfTokens = 0;
 			return tokenSaleInstance.buyTokens(numberOfTokens, { from: buyer, value: numberOfTokens * tokenPrice })
 		}).then(function(receipt) {
 			assert.equal(receipt.logs.length, 1, 'it returns true');
